@@ -1,38 +1,14 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
-  :root {@tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    
-    :root {
-      --background: #ffffff;
-      --foreground: #171717;
-    }
-    
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-      }
-    }
-    
-    body {
-      background: var(--background);
-      color: var(--foreground);
-    }
+  :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
@@ -41,5 +17,50 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat, Arial, Helvetica, sans-serif);
+}
+
+/* Animasjoner */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.fade-in {
+  animation: fadeIn 1s forwards;
+}
+
+.slide-in {
+  animation: slideIn 1s forwards;
+}
+
+.float {
+  animation: float 6s infinite ease-in-out;
+}
+
+/* Animation delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* Ekstra stildetaljer */
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

@@ -1,4 +1,6 @@
-// In ContactSection.tsx
+"use client"
+
+// I ContactSection.tsx
 import { useState } from 'react';
 
 export default function ContactSection() {
@@ -17,25 +19,35 @@ export default function ContactSection() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission - connect to your API
     console.log(formData);
+    
+    // Her kan du implementere kode for å sende data til API-et
+    // Eksempel på hvordan du kan vise en bekreftelse til brukeren:
+    alert('Takk for din melding! Vi kontakter deg snart.');
+    
+    // Nullstill skjemaet
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
   };
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16 slide-in">
-          <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
+          <h2 className="text-3xl font-bold mb-4">Ta Kontakt</h2>
           <div className="w-16 h-1 bg-primary-500 mx-auto mb-6"></div>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind or want to chat? Feel free to reach out.
+            Har du et prosjekt i tankene eller ønsker å slå av en prat? Ikke nøl med å ta kontakt.
           </p>
         </div>
         
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10">
-          {/* Contact Info */}
+          {/* Kontaktinformasjon */}
           <div className="slide-in">
-            <h3 className="text-xl font-bold mb-4">Contact Information</h3>
+            <h3 className="text-xl font-bold mb-4">Kontaktinformasjon</h3>
             <div className="space-y-4">
               <div className="flex items-center">
                 <div className="bg-primary-100 p-3 rounded-full mr-4">
@@ -44,8 +56,8 @@ export default function ContactSection() {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-medium">Email</h4>
-                  <p className="text-gray-600 dark:text-gray-400">contact@hassanyusuf.com</p>
+                  <h4 className="font-medium">E-post</h4>
+                  <p className="text-gray-600 dark:text-gray-400">kontakt@hassanyusuf.com</p>
                 </div>
               </div>
               
@@ -57,14 +69,14 @@ export default function ContactSection() {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-medium">Location</h4>
-                  <p className="text-gray-600 dark:text-gray-400">Oslo, Norway</p>
+                  <h4 className="font-medium">Lokasjon</h4>
+                  <p className="text-gray-600 dark:text-gray-400">Oslo, Norge</p>
                 </div>
               </div>
               
-              {/* Social Media */}
+              {/* Sosiale Medier */}
               <div className="mt-8">
-                <h4 className="font-medium mb-3">Connect with me</h4>
+                <h4 className="font-medium mb-3">Følg meg</h4>
                 <div className="flex space-x-4">
                   <a href="#" className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-500 hover:text-white transition-colors">
                     <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
@@ -73,7 +85,9 @@ export default function ContactSection() {
                   </a>
                   <a href="#" className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-500 hover:text-white transition-colors">
                     <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.21c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 // Continuing ContactSection.tsx
+                      <path fillRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.21c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.32 35.32 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z" clipRule="evenodd"></path>
+                    </svg>
+                  </a>
                   <a href="#" className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-500 hover:text-white transition-colors">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.599-.1-.898a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z"></path>
@@ -89,11 +103,11 @@ export default function ContactSection() {
             </div>
           </div>
           
-          {/* Contact Form */}
+          {/* Kontaktskjema */}
           <div className="slide-in delay-200">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Navn</label>
                 <input
                   type="text"
                   id="name"
@@ -106,7 +120,7 @@ export default function ContactSection() {
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">E-post</label>
                 <input
                   type="email"
                   id="email"
@@ -119,7 +133,7 @@ export default function ContactSection() {
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Melding</label>
                 <textarea
                   id="message"
                   name="message"
@@ -135,7 +149,7 @@ export default function ContactSection() {
                 type="submit"
                 className="w-full bg-primary-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-primary-600 transition-colors"
               >
-                Send Message
+                Send Melding
               </button>
             </form>
           </div>

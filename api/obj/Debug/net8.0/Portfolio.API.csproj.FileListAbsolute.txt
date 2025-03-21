@@ -1,0 +1,8 @@
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.csproj.AssemblyReference.cache
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.AssemblyInfoInputs.cache
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.AssemblyInfo.cs
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.csproj.CoreCompileInputs.cache
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\hassan\Desktop\Portfolio\api\obj\Debug\net8.0\Portfolio.API.sourcelink.json

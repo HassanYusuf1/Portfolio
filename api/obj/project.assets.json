@@ -5388,11 +5388,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hassan\\Desktop\\Portfolio\\Portfolio.API\\Portfolio.API.csproj",
+      "projectUniqueName": "C:\\Users\\hassan\\Desktop\\Portfolio\\api\\Portfolio.API.csproj",
       "projectName": "Portfolio.API",
-      "projectPath": "C:\\Users\\hassan\\Desktop\\Portfolio\\Portfolio.API\\Portfolio.API.csproj",
+      "projectPath": "C:\\Users\\hassan\\Desktop\\Portfolio\\api\\Portfolio.API.csproj",
       "packagesPath": "C:\\Users\\hassan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hassan\\Desktop\\Portfolio\\Portfolio.API\\obj\\",
+      "outputPath": "C:\\Users\\hassan\\Desktop\\Portfolio\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hassan\\AppData\\Roaming\\NuGet\\NuGet.Config"

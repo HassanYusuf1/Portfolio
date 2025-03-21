@@ -1,13 +1,26 @@
+"use client"
+
 // In ProjectsSection.tsx
 import Image from 'next/image';
 import ProjectCard from '../ui/ProjectCard';
 
+// Definer prosjekt-interface
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  githubUrl: string;
+  demoUrl: string;
+}
+
 export default function ProjectsSection() {
-  const projects = [
+  const projects: Project[] = [
     {
       id: 1,
-      title: "Birthday App",
-      description: "Android app for tracking birthdays with SMS notifications.",
+      title: "Bursdagsapp",
+      description: "Android-app for å holde styr på bursdager med SMS-varsler.",
       image: "/images/projects/birthday-app.jpg",
       technologies: ["Java", "Android", "Room Database"],
       githubUrl: "#",
@@ -15,8 +28,8 @@ export default function ProjectsSection() {
     },
     {
       id: 2,
-      title: "Nest Platform",
-      description: "Social platform with image sharing and commenting features.",
+      title: "Nest Plattform",
+      description: "Sosial plattform med bilde-deling og kommentarfunksjoner.",
       image: "/images/projects/nest-platform.jpg",
       technologies: ["C#", "ASP.NET Core", "React"],
       githubUrl: "#",
@@ -24,8 +37,8 @@ export default function ProjectsSection() {
     },
     {
       id: 3,
-      title: "Portfolio Website",
-      description: "Personal portfolio built with modern technologies.",
+      title: "Portefølje Nettside",
+      description: "Personlig portefølje bygget med moderne teknologier.",
       image: "/images/projects/portfolio.jpg",
       technologies: ["React", "TypeScript", "Tailwind CSS"],
       githubUrl: "#",
@@ -37,10 +50,10 @@ export default function ProjectsSection() {
     <section id="projects" className="py-20">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16 slide-in">
-          <h2 className="text-3xl font-bold mb-4">My Projects</h2>
+          <h2 className="text-3xl font-bold mb-4">Mine Prosjekter</h2>
           <div className="w-16 h-1 bg-primary-500 mx-auto mb-6"></div>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Recent work showcasing my technical skills and creativity
+            Nylige arbeider som viser mine tekniske ferdigheter og kreativitet
           </p>
         </div>
         
@@ -56,4 +69,4 @@ export default function ProjectsSection() {
       </div>
     </section>
   );
-} 
+}

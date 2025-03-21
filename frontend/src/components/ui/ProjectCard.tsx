@@ -1,9 +1,27 @@
+"use client"
+
 // In ProjectCard.tsx
 import Image from 'next/image';
 import { useState } from 'react';
 import Badge from './Badge';
 
-export default function ProjectCard({ project, index }) {
+// Definer prosjekt-interface
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  githubUrl: string;
+  demoUrl: string;
+}
+
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+}
+
+export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
@@ -42,7 +60,7 @@ export default function ProjectCard({ project, index }) {
             href={project.githubUrl} 
             className="px-4 py-2 border border-primary-500 text-primary-500 rounded-full hover:bg-primary-500 hover:text-white transition-colors"
           >
-            View
+            Vis
           </a>
           <a 
             href={project.demoUrl} 

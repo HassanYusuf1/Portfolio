@@ -31,6 +31,22 @@ const config: Config = {
           900: '#0a0a0a',
         },
       },
+      animation: {
+        'spin-slow': 'spin 20s linear infinite',
+      },
+      fontFamily: {
+        sans: ['var(--font-montserrat)', 'Arial', 'sans-serif'],
+        mono: ['var(--font-roboto-mono)', 'monospace'],
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          sm: '2rem',
+          lg: '4rem',
+          xl: '5rem',
+        },
+      },
     },
   },
   plugins: [],
