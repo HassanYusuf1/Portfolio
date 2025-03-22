@@ -1,7 +1,11 @@
-// In Badge.tsx
-export default function Badge({ text }) {
+// src/components/ui/Badge.tsx
+interface BadgeProps {
+    text: string;
+  }
+  
+  export default function Badge({ text }: BadgeProps) {
     return (
-      <span className="inline-block bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+      <span className="badge">
         {text}
       </span>
     );

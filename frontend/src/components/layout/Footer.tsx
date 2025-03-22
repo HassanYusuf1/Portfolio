@@ -2,18 +2,29 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { FooterSection } from '@/types';
 
 export default function Footer() {
   // Flytt Date-operasjonen til en useEffect for å unngå hydration-feil
   const [currentYear, setCurrentYear] = useState("2025"); // Bruk en trygg default
   const [email, setEmail] = useState('');
 
+  const quickLinks: FooterSection = {
+    title: "Hurtiglenker",
+    links: [
+      { text: "Hjem", url: "#home" },
+      { text: "Prosjekter", url: "#projects" },
+      { text: "Om Meg", url: "#about" },
+      { text: "Kontakt", url: "#contact" }
+    ]
+  };
+  
   // Kjør dette KUN på klientsiden
   useEffect(() => {
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
   
-  const handleSubscribe = (e) => {
+  const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Implementer nyhetsbrev-påmelding her
     alert(`Takk for påmeldingen! Du vil motta oppdateringer på: ${email}`);
@@ -26,9 +37,9 @@ export default function Footer() {
       <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600"></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-12 gap-8 mb-8">
+        <div className="grid md:grid-cols-12 gap-8 mb-8 footer-grid">
           {/* Logo & Info */}
-          <div className="md:col-span-5">
+          <div className="md-col-span-5">
             <div className="flex items-center mb-6">
               <div className="bg-primary-500 text-white p-2 rounded">
                 <span className="font-bold">HY</span>
@@ -59,18 +70,21 @@ export default function Footer() {
           </div>
           
           {/* Quick Links */}
-          <div className="md:col-span-2">
-            <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Hurtiglenker</h3>
+          <div className="md-col-span-2">
+            <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">{quickLinks.title}</h3>
             <ul className="space-y-2">
-              <li><Link href="#home" className="text-gray-300 hover:text-white transition-colors inline-block py-1">Hjem</Link></li>
-              <li><Link href="#projects" className="text-gray-300 hover:text-white transition-colors inline-block py-1">Prosjekter</Link></li>
-              <li><Link href="#about" className="text-gray-300 hover:text-white transition-colors inline-block py-1">Om Meg</Link></li>
-              <li><Link href="#contact" className="text-gray-300 hover:text-white transition-colors inline-block py-1">Kontakt</Link></li>
+              {quickLinks.links.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.url} className="text-gray-300 hover:text-white transition-colors inline-block py-1">
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           
           {/* Contact */}
-          <div className="md:col-span-2">
+          <div className="md-col-span-2">
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Kontakt</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
@@ -89,7 +103,7 @@ export default function Footer() {
           </div>
           
           {/* Newsletter */}
-          <div className="md:col-span-3">
+          <div className="md-col-span-3">
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Nyhetsbrev</h3>
             <p className="text-gray-300 mb-4">Abonner for å få oppdateringer om mine nyeste prosjekter.</p>
             <form onSubmit={handleSubscribe} className="space-y-2">

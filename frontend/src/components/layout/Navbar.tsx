@@ -1,13 +1,13 @@
 "use client"
 
-// I Navbar.tsx
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { NavLink } from '@/types';
 
-// NavLink komponent med TypeScript-støtte
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+// NavLink component
+function NavLinkComponent({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="text-gray-800 dark:text-gray-200 hover:text-primary-500 font-medium">
+    <Link href={href} className="navbar-link">
       {children}
     </Link>
   );
@@ -16,6 +16,13 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const navLinks: NavLink[] = [
+    { title: 'Hjem', href: '#home' },
+    { title: 'Prosjekter', href: '#projects' },
+    { title: 'Om Meg', href: '#about' },
+    { title: 'Kontakt', href: '#contact' }
+  ];
   
   useEffect(() => {
     const handleScroll = () => {
@@ -30,12 +37,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-md py-3' : 'bg-transparent py-5'
-    }`}>
+    <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : 'navbar-transparent'}`}>
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="navbar-logo">
           <div className="bg-primary-500 text-white p-2 rounded">
             <span className="font-bold">HY</span>
           </div>
@@ -43,16 +48,17 @@ export default function Navbar() {
         </Link>
         
         {/* Desktop Nav */}
-        <div className="hidden md:flex space-x-8">
-          <NavLink href="#home">Hjem</NavLink>
-          <NavLink href="#projects">Prosjekter</NavLink>
-          <NavLink href="#about">Om Meg</NavLink>
-          <NavLink href="#contact">Kontakt</NavLink>
+        <div className="hidden md-flex navbar-links">
+          {navLinks.map((link, index) => (
+            <NavLinkComponent key={index} href={link.href}>
+              {link.title}
+            </NavLinkComponent>
+          ))}
         </div>
         
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden"
+          className="md-hidden"
           onClick={toggleMobileMenu}
           aria-label={isMobileMenuOpen ? "Lukk meny" : "Åpne meny"}
         >
@@ -70,12 +76,13 @@ export default function Navbar() {
       
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white/95 dark:bg-gray-900/95 px-6 py-4 shadow-lg">
+        <div className="md-hidden bg-white/95 dark:bg-gray-900/95 px-6 py-4 shadow-lg">
           <div className="flex flex-col space-y-4">
-            <NavLink href="#home">Hjem</NavLink>
-            <NavLink href="#projects">Prosjekter</NavLink>
-            <NavLink href="#about">Om Meg</NavLink>
-            <NavLink href="#contact">Kontakt</NavLink>
+            {navLinks.map((link, index) => (
+              <NavLinkComponent key={index} href={link.href}>
+                {link.title}
+              </NavLinkComponent>
+            ))}
           </div>
         </div>
       )}

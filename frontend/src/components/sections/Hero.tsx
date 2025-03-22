@@ -1,15 +1,14 @@
-// In Hero.tsx
-import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-screen bg-gradient-to-br from-primary-600 to-primary-900 flex items-center text-white">
+    <section id="home" className="relative min-h-screen bg-primary-gradient flex items-center text-white">
       {/* Background particles/decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="float delay-100 absolute top-1/4 left-1/4 w-3 h-3 rounded-full bg-white opacity-30"></div>
         <div className="float delay-200 absolute top-1/3 right-1/4 w-4 h-4 rounded-full bg-white opacity-20"></div>
         <div className="float delay-300 absolute bottom-1/4 left-1/3 w-2 h-2 rounded-full bg-white opacity-20"></div>
-        {/* More decorative elements... */}
+        <div className="float delay-400 absolute bottom-1/3 right-1/3 w-5 h-5 rounded-full bg-white opacity-10"></div>
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
@@ -26,13 +25,13 @@ export default function Hero() {
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 fade-in delay-300">
-            <button className="bg-white text-primary-600 px-8 py-3 rounded-full font-medium hover:bg-primary-50 transition-colors">
+          <div className="flex flex-col-mobile sm-flex-row gap-4 fade-in delay-300">
+            <Link href="#projects" className="btn btn-primary">
               View My Work
-            </button>
-            <button className="border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors">
+            </Link>
+            <Link href="#contact" className="btn btn-outline">
               Contact Me
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -45,4 +44,4 @@ export default function Hero() {
       </div>
     </section>
   );
-} 
+}

@@ -1,3 +1,4 @@
+// I src\app\layout.tsx
 import './globals.css';
 import type { Metadata } from 'next';
 import { Montserrat, Roboto_Mono } from 'next/font/google';
@@ -25,7 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${robotoMono.variable} scroll-smooth`}>
+    <html 
+      lang="en" 
+      className={`${montserrat.variable} ${robotoMono.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
       <body className="antialiased">
         {children}
       </body>
