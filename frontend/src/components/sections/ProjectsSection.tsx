@@ -60,7 +60,7 @@ export default function ProjectsSection() {
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="project-card animate-fadeIn [animation-delay:200ms]">
+    <div className="project-card animate-fadeIn" style={{ animationDelay: '200ms' }}>
       <div className="relative h-48 overflow-hidden">
         {/* Use placeholder if no image is available */}
         <div className="absolute inset-0 bg-primary-100 flex items-center justify-center">

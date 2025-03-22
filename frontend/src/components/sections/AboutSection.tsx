@@ -28,7 +28,7 @@ export default function AboutSection() {
           </div>
           
           {/* About Text */}
-          <div className="animate-slideIn [animation-delay:200ms]">
+          <div className="animate-slideIn" style={{ animationDelay: '200ms' }}>
             <h3 className="text-2xl font-bold mb-2">Hassan Yusuf</h3>
             <h4 className="text-primary-500 text-lg mb-4">Software Engineer & Professional Athlete</h4>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
