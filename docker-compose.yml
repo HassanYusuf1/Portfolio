@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # SQL Server database
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: portfolio-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrongPassword123!
+    ports:
+      - "1433:1433"
+    volumes:
+      - portfolio-db-data:/var/opt/mssql
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrongPassword123!" -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: portfolio-api
+    ports:
+      - "5147:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=PortfolioDB;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;
+    networks:
+      - portfolio-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: portfolio-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5147/api
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge
+
+volumes:
+  portfolio-db-data:

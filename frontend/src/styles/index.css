@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 23, 23, 23;
+  --background-rgb: 255, 255, 255;
+  
+  /* Primary colors */
+  --color-primary-50: #f0f4ff;
+  --color-primary-100: #d9e2ff;
+  --color-primary-200: #b3c6ff;
+  --color-primary-300: #809fff;
+  --color-primary-400: #5a67d8;
+  --color-primary-500: #4c51bf;
+  --color-primary-600: #3c366b;
+  --color-primary-700: #312e59;
+  --color-primary-800: #1e1b4b;
+  --color-primary-900: #0f0d35;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 237, 237, 237;
+    --background-rgb: 10, 10, 10;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer components {
+  /* Navbar Styles */
+  .navbar {
+    @apply fixed w-full z-50 transition-all duration-300;
+  }
+  
+  .navbar-scrolled {
+    @apply bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md py-3;
+  }
+  
+  .navbar-transparent {
+    @apply bg-transparent py-5;
+  }
+  
+  .navbar-logo {
+    @apply flex items-center;
+  }
+  
+  .navbar-links {
+    @apply hidden md:flex gap-8;
+  }
+  
+  .navbar-link {
+    @apply font-medium text-gray-800 dark:text-gray-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors;
+  }
+  
+  /* Section Styles */
+  .section {
+    @apply py-20;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-4 text-center;
+  }
+  
+  .section-divider {
+    @apply w-16 h-1 bg-primary-500 mx-auto mb-6;
+  }
+  
+  /* Button Styles */
+  .btn {
+    @apply px-8 py-3 rounded-full font-medium transition-all duration-300 inline-block text-center;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-white text-white hover:bg-white/10;
+  }
+  
+  /* Skill Bar */
+  .skill-bar {
+    @apply w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5;
+  }
+  
+  .skill-bar-fill {
+    @apply bg-primary-500 h-2.5 rounded-full;
+  }
+  
+  /* Project Card */
+  .project-card {
+    @apply rounded-xl overflow-hidden shadow-md bg-white dark:bg-gray-800 transition-transform duration-300;
+  }
+  
+  .project-card:hover {
+    @apply transform -translate-y-2 shadow-lg;
+  }
+  
+  /* Form elements */
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:text-white;
+  }
+  
+  /* Badge component */
+  .badge {
+    @apply inline-block bg-primary-100 text-primary-800 dark:bg-primary-800 dark:text-primary-100 text-xs font-medium px-2.5 py-1 rounded;
+  }
+  
+  /* Background gradient */
+  .bg-primary-gradient {
+    @apply bg-gradient-to-br from-primary-600 to-primary-900;
+  }
+}

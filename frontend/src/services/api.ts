@@ -1,38 +1,36 @@
-// In api.ts
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5147/api';
+// Central TypeScript definitions for the project
 
-export async function fetchProjects() {
-  const response = await fetch(`${API_URL}/projects`);
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch projects');
+export interface Project {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    technologies: string[];
+    githubUrl: string;
+    demoUrl: string;
   }
   
-  return response.json();
-}
-
-export async function fetchProject(id: number) {
-  const response = await fetch(`${API_URL}/projects/${id}`);
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch project');
+  export interface ContactFormData {
+    name: string;
+    email: string;
+    message: string;
   }
   
-  return response.json();
-}
-
-export async function sendContactForm(data: { name: string; email: string; message: string }) {
-  const response = await fetch(`${API_URL}/contact`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to send message');
+  export interface SocialMedia {
+    platform: 'github' | 'linkedin' | 'twitter' | 'instagram' | 'facebook';
+    url: string;
+    icon: React.ReactNode;
   }
   
-  return response.json();
-}
+  export interface NavLink {
+    title: string;
+    href: string;
+  }
+  
+  export interface FooterSection {
+    title: string;
+    links: {
+      text: string;
+      url: string;
+    }[];
+  }

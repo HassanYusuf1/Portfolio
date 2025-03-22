@@ -18,7 +18,6 @@ builder.Services.AddDbContext<PortfolioDbContext>(options =>
 
 // Register repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 // Add CORS
@@ -26,9 +25,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.WithOrigins(
+                "http://localhost:3000",
+                "https://your-production-domain.com" // Add your production URL here
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
@@ -43,6 +45,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Use CORS before Authorization
 app.UseCors("AllowReactApp");
 
 app.UseAuthorization();
