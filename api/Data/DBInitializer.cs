@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Portfolio.API.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Portfolio.API.Data
 {
@@ -12,9 +14,9 @@ namespace Portfolio.API.Data
             // Only seed if the Projects table is empty
             if (!context.Projects.Any())
             {
-                var projects = new List<Models.Project>
+                var projects = new List<Project>
                 {
-                    new Models.Project
+                    new Project
                     {
                         Title = "Portfolio Website",
                         Description = "My personal portfolio website built with Next.js and ASP.NET Core",
@@ -24,7 +26,7 @@ namespace Portfolio.API.Data
                         CreatedDate = DateTime.Now,
                         Technologies = new List<string> { "Next.js", "ASP.NET Core", "TypeScript", "Tailwind CSS" }
                     },
-                    new Models.Project
+                    new Project
                     {
                         Title = "E-commerce Platform",
                         Description = "Full stack e-commerce platform with product management and user authentication",
@@ -34,7 +36,7 @@ namespace Portfolio.API.Data
                         CreatedDate = DateTime.Now.AddMonths(-2),
                         Technologies = new List<string> { "React", "Node.js", "Express", "MongoDB" }
                     },
-                    new Models.Project
+                    new Project
                     {
                         Title = "Fitness Tracking App",
                         Description = "Mobile app for tracking workouts and nutrition with detailed analytics",

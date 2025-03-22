@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
-import { useEffect, useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
-// Type for particle positions
+// Type for particle
 interface Particle {
   x: number;
   y: number;
@@ -22,21 +21,22 @@ export default function Hero() {
   const animationRef = useRef<number>(0);
   const mousePosition = useRef({ x: 0, y: 0 });
 
-  // Initialize particles on component mount
   useEffect(() => {
     setIsLoaded(true);
+    
+    // Create particles
     const generateParticles = () => {
       const newParticles: Particle[] = [];
-      const colors = ['#5a84ff', '#3149c5', '#28a99a', '#1d6f68', '#ffffff'];
+      const colors = ['#4338ca', '#6366f1', '#14b8a6', '#0ea5e9', '#f0fdfa'];
       
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 40; i++) {
         newParticles.push({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          size: Math.random() * 5 + 1,
-          speedX: (Math.random() - 0.5) * 0.5,
-          speedY: (Math.random() - 0.5) * 0.5,
-          opacity: Math.random() * 0.5 + 0.1,
+          size: Math.random() * 4 + 1,
+          speedX: (Math.random() - 0.5) * 0.3,
+          speedY: (Math.random() - 0.5) * 0.3,
+          opacity: Math.random() * 0.5 + 0.2,
           color: colors[Math.floor(Math.random() * colors.length)]
         });
       }
@@ -46,7 +46,7 @@ export default function Hero() {
 
     generateParticles();
 
-    // Track mouse position for interactive particle effects
+    // Track mouse position for interactive effects
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current = {
         x: e.clientX,
@@ -58,11 +58,13 @@ export default function Hero() {
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationRef.current);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
   }, []);
 
-  // Animation loop for particles
+  // Animation logic for particles
   useEffect(() => {
     if (!canvasRef.current || particles.length === 0) return;
     
@@ -70,7 +72,7 @@ export default function Hero() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Resize canvas to match window
+    // Resize canvas
     const handleResize = () => {
       if (canvasRef.current) {
         canvasRef.current.width = window.innerWidth;
@@ -81,25 +83,25 @@ export default function Hero() {
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    // Animation function to update and draw particles
+    // Animation function
     const animate = () => {
       if (!canvasRef.current || !ctx) return;
       
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Draw and update each particle
+      // Update particles
       const updatedParticles = particles.map(particle => {
-        // Calculate distance from mouse for interactive effect
+        // Distance from mouse
         const dx = mousePosition.current.x - particle.x;
         const dy = mousePosition.current.y - particle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Apply force based on mouse position
+        // Apply mouse force
         let vx = particle.speedX;
         let vy = particle.speedY;
         
-        if (distance < 100) {
-          const force = 0.5 / distance;
+        if (distance < 120) {
+          const force = 0.2 / Math.max(distance, 1);
           vx -= dx * force;
           vy -= dy * force;
         }
@@ -108,7 +110,7 @@ export default function Hero() {
         let newX = particle.x + vx;
         let newY = particle.y + vy;
         
-        // Bouncing off edges
+        // Boundary check
         if (newX < 0 || newX > window.innerWidth) {
           vx = -vx;
           newX += vx;
@@ -125,15 +127,15 @@ export default function Hero() {
         ctx.fillStyle = particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0');
         ctx.fill();
         
-        // Draw connecting lines between nearby particles
+        // Draw connecting lines for network effect
         particles.forEach(p2 => {
           const dx = particle.x - p2.x;
           const dy = particle.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const dist = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 100) {
+          if (dist < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255,255,255,${0.1 * (1 - distance / 100)})`;
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(p2.x, p2.y);
@@ -163,37 +165,33 @@ export default function Hero() {
   }, [particles]);
 
   return (
-    <section id="home" className="relative min-h-screen bg-primary-gradient flex items-center text-white overflow-hidden">
-      {/* Interactive particle background */}
+    <section id="home" className="relative h-screen overflow-hidden bg-gradient-to-b from-primary-900 via-primary-800 to-primary-700 text-white">
+      {/* Particle Canvas */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full z-0"
       />
       
-      {/* Gradient overlay */}
+      {/* Additional visual elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary-900/50 via-primary-800/30 to-transparent z-0"></div>
       
-      {/* Modern 3D floating shapes */}
+      {/* Decorative elements */}
       <div className="absolute w-full h-full overflow-hidden z-0">
         <div 
-          className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-secondary-500/20 blur-3xl animate-float"
-          style={{ animationDuration: '15s' }}
+          className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary-500/10 blur-3xl animate-pulse-slow"
         ></div>
         <div 
-          className="absolute top-1/3 -left-40 w-80 h-80 rounded-full bg-primary-400/15 blur-3xl animate-float"
-          style={{ animationDuration: '20s', animationDelay: '2s' }}
-        ></div>
-        <div 
-          className="absolute -bottom-32 right-1/4 w-64 h-64 rounded-full bg-white/10 blur-3xl animate-float"
-          style={{ animationDuration: '25s', animationDelay: '1s' }}
+          className="absolute top-1/3 -left-32 w-80 h-80 rounded-full bg-primary-400/10 blur-3xl animate-pulse-slow"
+          style={{ animationDelay: '2s' }}
         ></div>
       </div>
       
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-3xl mx-auto md:mx-0">
+      {/* Content */}
+      <div className="container h-full mx-auto px-4 sm:px-6 relative z-10 flex flex-col justify-center">
+        <div className="max-w-3xl">
+          {/* Animated badge */}
           <div 
-            className={`transform transition-all duration-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-            style={{ transitionDelay: '200ms' }}
+            className={`transform transition-all duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
           >
             <div className="inline-block px-4 py-2 mb-6 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
               <div className="flex items-center space-x-2">
@@ -201,10 +199,18 @@ export default function Hero() {
                 <span className="text-sm font-medium tracking-wider text-white">Programvareutvikler & Profesjonell Idrettsutøver</span>
               </div>
             </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
+          </div>
+          
+          {/* Main heading */}
+          <div 
+            className={`transform transition-all duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+            style={{ transitionDelay: '200ms' }}
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight">
               <span className="block">Hei, jeg er</span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-secondary-300 to-white animate-pulse-slow">Hassan Yusuf</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-secondary-300 to-white">
+                Hassan Yusuf
+              </span>
             </h1>
             
             <h2 className="text-xl md:text-2xl mb-8 text-primary-100 font-light">
@@ -212,8 +218,9 @@ export default function Hero() {
             </h2>
           </div>
           
+          {/* Description */}
           <div 
-            className={`transform transition-all duration-1000 mb-10 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+            className={`transform transition-all duration-700 mb-8 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
             style={{ transitionDelay: '400ms' }}
           >
             <p className="text-lg text-primary-100 leading-relaxed">
@@ -222,30 +229,34 @@ export default function Hero() {
             </p>
           </div>
           
+          {/* CTA Buttons */}
           <div 
-            className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+            className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
             style={{ transitionDelay: '600ms' }}
           >
-            <Link href="#projects" className="btn btn-primary group relative overflow-hidden">
-              <span className="relative z-10">Se Mine Prosjekter</span>
-              <span className="absolute inset-0 bg-white/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-              <span className="absolute right-6 group-hover:right-4 transition-all duration-300">
-                →
+            <Link href="#projects" className="btn-primary">
+              <span className="relative z-10 flex items-center justify-center px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 duration-300">
+                Se Mine Prosjekter
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
               </span>
             </Link>
             
-            <Link href="#contact" className="btn btn-outline group relative overflow-hidden">
-              <span className="relative z-10">Kontakt Meg</span>
-              <span className="absolute inset-0 bg-white/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-              <span className="absolute right-6 group-hover:right-4 transition-all duration-300">
-                →
+            <Link href="#contact" className="btn-secondary">
+              <span className="relative z-10 flex items-center justify-center px-8 py-3 bg-transparent border-2 border-white text-white font-medium rounded-full hover:bg-white/10 transition-all duration-300">
+                Kontakt Meg
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
               </span>
             </Link>
           </div>
           
-          {/* Modern Tech stack display */}
+          {/* Tech Stack */}
           <div 
-            className={`mt-16 transform transition-all duration-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+            className={`mt-16 transform transition-all duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
             style={{ transitionDelay: '800ms' }}
           >
             <div className="relative">
@@ -253,18 +264,18 @@ export default function Hero() {
               <div className="flex flex-wrap gap-6 items-center py-4 px-1">
                 <div className="text-xs uppercase tracking-wider text-primary-200 font-semibold">Tech Stack:</div>
                 
-                {/* Tech Icons - Using div elements with custom styling instead of SVG */}
-                <div className="flex space-x-4">
+                {/* Tech logos */}
+                <div className="flex flex-wrap gap-4">
                   {[
                     { name: 'React', color: '#61DAFB', letter: 'R' },
-                    { name: 'TypeScript', color: '#3178C6', letter: 'TS' },
                     { name: 'Next.js', color: '#FFFFFF', letter: 'N' },
+                    { name: 'TypeScript', color: '#3178C6', letter: 'TS' },
                     { name: 'Tailwind', color: '#38B2AC', letter: 'TW' },
-                    { name: 'Node.js', color: '#339933', letter: 'N' }
+                    { name: 'ASP.NET', color: '#512BD4', letter: '.NET' }
                   ].map((tech, index) => (
                     <div 
                       key={index}
-                      className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-lg hover:scale-110 transition-all duration-300 cursor-pointer group"
+                      className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-md hover:scale-110 transition-all duration-300 cursor-pointer group"
                       title={tech.name}
                     >
                       <div 
@@ -273,7 +284,7 @@ export default function Hero() {
                       >
                         {tech.letter}
                       </div>
-                      <span className="absolute -bottom-8 text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-black/70 px-2 py-1 rounded">
+                      <span className="absolute -bottom-8 text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-black/70 px-2 py-1 rounded z-20">
                         {tech.name}
                       </span>
                     </div>

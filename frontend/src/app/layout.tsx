@@ -1,8 +1,9 @@
-// I src\app\layout.tsx
+// src/app/layout.tsx
 import './globals.css';
 import type { Metadata } from 'next';
 import { Montserrat, Roboto_Mono } from 'next/font/google';
 
+// Font declarations
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
@@ -16,8 +17,9 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Hassan Yusuf | Software Engineer & Professional Athlete',
-  description: 'Personal portfolio website of Hassan Yusuf, Software Engineer and Professional Athlete',
+  title: 'Hassan Yusuf | Programmvareutvikler & Profesjonell Idrettsutøver',
+  description: 'Personlig portefølje for Hassan Yusuf, utvikler av moderne webløsninger med React, Next.js og ASP.NET Core.',
+  keywords: 'Hassan Yusuf, web utvikling, portfolio, React, Next.js, ASP.NET Core',
 };
 
 export default function RootLayout({
@@ -27,11 +29,11 @@ export default function RootLayout({
 }) {
   return (
     <html 
-      lang="en" 
+      lang="no" 
       className={`${montserrat.variable} ${robotoMono.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      <body className="antialiased">
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>

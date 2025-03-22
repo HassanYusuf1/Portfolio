@@ -14,9 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext
+// Add DbContext with SQLite instead of SQL Server
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
@@ -62,8 +62,8 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<PortfolioDbContext>();
         
-        // Apply any pending migrations
-        context.Database.Migrate();
+        // Apply any pending migrations and create the database if it doesn't exist
+        context.Database.EnsureCreated();
         
         // Seed the database with initial data
         DbInitializer.Initialize(context);

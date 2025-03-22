@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -19,38 +19,47 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
   return (
-    <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : 'navbar-transparent'}`}>
-      <div className="container mx-auto px-6 flex items-center justify-between">
+    <nav
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'py-3 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-lg shadow-md'
+          : 'py-5 bg-transparent'
+      }`}
+    >
+      <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="navbar-logo">
-          <div className="bg-primary-500 text-white p-2 rounded">
+        <Link href="/#home" className="flex items-center group">
+          <div className="bg-primary-600 text-white p-2 rounded-md transition-all duration-300 group-hover:bg-primary-700">
             <span className="font-bold">HY</span>
           </div>
-          <span className="ml-2 font-bold text-xl">Hassan Yusuf</span>
+          <span className="ml-2 font-semibold text-xl text-neutral-800 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+            Hassan Yusuf
+          </span>
         </Link>
         
         {/* Desktop Nav */}
-        <div className="navbar-links">
+        <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link, index) => (
-            <Link key={index} href={link.href} className="navbar-link">
+            <Link 
+              key={index} 
+              href={link.href}
+              className="relative font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
+            >
               {link.title}
             </Link>
           ))}
         </div>
         
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle */}
         <button 
-          className="block md:hidden"
-          onClick={toggleMobileMenu}
+          className="block md:hidden text-neutral-800 dark:text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Lukk meny" : "Åpne meny"}
         >
           {isMobileMenuOpen ? (
@@ -66,17 +75,24 @@ export default function Navbar() {
       </div>
       
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="block md:hidden bg-white/95 dark:bg-gray-900/95 px-6 py-4 shadow-lg">
-          <div className="flex flex-col space-y-4">
-            {navLinks.map((link, index) => (
-              <Link key={index} href={link.href} className="navbar-link">
-                {link.title}
-              </Link>
-            ))}
-          </div>
+      <div 
+        className={`md:hidden absolute w-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden ${
+          isMobileMenuOpen ? 'max-h-60 py-4' : 'max-h-0 py-0'
+        }`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 flex flex-col space-y-4">
+          {navLinks.map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              className="py-2 text-center font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.title}
+            </Link>
+          ))}
         </div>
-      )}
+      </div>
     </nav>
   );
 }

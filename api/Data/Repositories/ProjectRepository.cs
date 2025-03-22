@@ -18,7 +18,7 @@ namespace Portfolio.API.Data.Repositories
             return await _context.Projects.ToListAsync();
         }
 
-        public async Task<Project> GetByIdAsync(int id)
+        public async Task<Project?> GetByIdAsync(int id)
         {
             return await _context.Projects.FindAsync(id);
         }

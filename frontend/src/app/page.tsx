@@ -1,9 +1,10 @@
-// In page.tsx
+// src/app/page.tsx
+import React from 'react';
+import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ContactSection from '@/components/sections/ContactSection';
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export default function Home() {
