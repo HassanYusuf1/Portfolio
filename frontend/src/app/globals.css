@@ -2,7 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-rgb: 248, 250, 252;
+  
+  /* Custom variables */
+  --header-height: 5rem;
+  --transition-standard: 0.3s ease;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 248, 250, 252;
+    --background-rgb: 15, 23, 42;
+  }
+}
+
 body {
-  color: black;
-  background: white;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-feature-settings: "ss01", "ss03";
+}
+
+@layer base {
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Typography improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+  
+  /* Focus states for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  }
+}
+
+@layer components {
+  /* Navbar Styles */
+  .navbar {
+    @apply fixed w-full z-50 transition-all duration-300;
+  }
+  
+  .navbar-scrolled {
+    @apply bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md shadow-soft py-3;
+  }
+  
+  .navbar-transparent {
+    @apply bg-transparent py-5;
+  }
+  
+  .navbar-logo {
+    @apply flex items-center;
+  }
+  
+  .navbar-links {
+    @apply hidden md:flex gap-8;
+  }
+  
+  .navbar-link {
+    @apply relative font-medium text-neutral-800 dark:text-neutral-200 hover:text-primary-500 dark:hover:text-primary-400 transition-colors
+    after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-primary-500 after:transition-all hover:after:w-full;
+  }
+  
+  /* Section Styles */
+  .section {
+    @apply py-20 relative overflow-hidden;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-4 text-center;
+  }
+  
+  .section-divider {
+    @apply w-16 h-1 bg-primary-500 mx-auto mb-6;
+  }
+  
+  /* Button Styles */
+  .btn {
+    @apply px-8 py-3 rounded-full font-medium transition-all duration-300 inline-block text-center;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 shadow-md hover:shadow-lg transform hover:-translate-y-1;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-white text-white hover:bg-white/10;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary-500 text-white hover:bg-secondary-600 shadow-md hover:shadow-lg transform hover:-translate-y-1;
+  }
+  
+  /* Skill Bar */
+  .skill-bar {
+    @apply w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2.5;
+  }
+  
+  .skill-bar-fill {
+    @apply bg-primary-500 h-2.5 rounded-full;
+  }
+  
+  /* Project Card */
+  .project-card {
+    @apply rounded-xl overflow-hidden shadow-card bg-white dark:bg-neutral-800 transition-all duration-500;
+  }
+  
+  .project-card:hover {
+    @apply transform -translate-y-2 shadow-lg;
+  }
+  
+  /* Form elements */
+  .input-field {
+    @apply w-full px-4 py-3 border border-neutral-300 dark:border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-neutral-800 dark:text-white;
+  }
+  
+  /* Badge component */
+  .badge {
+    @apply inline-block bg-primary-100 text-primary-800 dark:bg-primary-800/30 dark:text-primary-100 text-xs font-medium px-2.5 py-1 rounded-md;
+  }
+  
+  /* Background gradient */
+  .bg-primary-gradient {
+    @apply bg-gradient-to-br from-primary-600 to-primary-900;
+  }
+  
+  /* Animated decorative dots background */
+  .bg-dots {
+    @apply bg-dots-pattern bg-dots-lg;
+  }
+}
+
+/* Custom animations */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.animated-shimmer {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0) 40%);
+  background-size: 468px 100%;
+  animation: shimmer 1.5s infinite linear;
 }

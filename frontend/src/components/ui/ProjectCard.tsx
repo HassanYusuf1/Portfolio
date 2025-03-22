@@ -1,54 +1,108 @@
+import { useState } from 'react';
 import Link from 'next/link';
-import Badge from './Badge';
 import { Project } from '@/types';
 
 interface ProjectCardProps {
   project: Project;
+  index: number;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  // Calculate animation delay based on index
+  const animationDelay = `${index * 100}ms`;
+  
   return (
-    <div className="project-card">
-      <div className="relative h-48 overflow-hidden">
-        {/* For production, replace with actual image */}
-        <div className="absolute inset-0 bg-primary-100 flex items-center justify-center">
-          <span className="text-primary-500 font-bold">{project.title}</span>
-        </div>
-      </div>
-      
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+    <div 
+      className="project-card group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ 
+        animationDelay,
+        transform: `perspective(1000px) rotateY(0deg) rotateX(0deg)`,
+        transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
+      }}
+    >
+      {/* Project Image with Overlay */}
+      <div className="relative h-56 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600/80 to-secondary-600/80 opacity-70 z-10"></div>
         
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.technologies.map((tech, index) => (
-            <Badge key={index} text={tech} />
-          ))}
+        {/* Image placeholder with color gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-200 to-secondary-100 transform group-hover:scale-110 transition-transform duration-700"></div>
+        
+        {/* Project title overlay */}
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <span className="font-bold text-white text-lg tracking-wide">{project.title}</span>
         </div>
         
-        <div className="flex justify-between">
+        {/* Hover effect buttons */}
+        <div className={`absolute inset-0 flex items-center justify-center gap-4 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
           <a 
             href={project.githubUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-500 hover:text-primary-700 font-medium inline-flex items-center"
+            className="px-4 py-2 bg-black/80 hover:bg-black text-white rounded-full transform hover:scale-105 transition-all duration-300"
           >
-            <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
-            </svg>
             GitHub
+          </a>
+          <a 
+            href={project.demoUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-secondary-500/90 hover:bg-secondary-500 text-white rounded-full transform hover:scale-105 transition-all duration-300"
+          >
+            Live Demo
+          </a>
+        </div>
+      </div>
+      
+      {/* Project Info */}
+      <div className="p-6 relative bg-white dark:bg-neutral-800">
+        {/* Animated color bar top */}
+        <div 
+          className="absolute top-0 left-0 h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-secondary-500"
+          style={{
+            width: isHovered ? '100%' : '0%',
+            transition: 'width 0.4s ease-in-out',
+          }}
+        ></div>
+        
+        <h3 className="text-xl font-bold mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{project.title}</h3>
+        
+        <p className="text-neutral-600 dark:text-neutral-300 mb-4 text-sm line-clamp-3">{project.description}</p>
+        
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.technologies.map((tech, index) => (
+            <span 
+              key={index} 
+              className="badge transform group-hover:translate-y-[-2px] transition-all duration-300"
+              style={{ transitionDelay: `${index * 50}ms` }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+        
+        <div className="flex justify-between pt-4 border-t border-neutral-200 dark:border-neutral-700">
+          <a 
+            href={project.githubUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary-500 hover:text-primary-700 dark:hover:text-primary-300 font-medium inline-flex items-center text-sm group"
+          >
+            <span>GitHub</span>
+            <span className="ml-1 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
           
           <a 
             href={project.demoUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-primary-500 hover:text-primary-700 font-medium inline-flex items-center"
+            className="text-secondary-500 hover:text-secondary-700 dark:hover:text-secondary-300 font-medium inline-flex items-center text-sm group"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-            Live Demo
+            <span>Live Demo</span>
+            <span className="ml-1 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
           </a>
         </div>
       </div>

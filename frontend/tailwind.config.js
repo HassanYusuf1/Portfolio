@@ -9,25 +9,42 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50: '#f0f4ff',
-          100: '#d9e2ff',
-          200: '#b3c6ff',
-          300: '#809fff',
-          400: '#5a67d8', // Primary brand color
-          500: '#4c51bf',
-          600: '#3c366b',
-          700: '#312e59',
-          800: '#1e1b4b',
-          900: '#0f0d35',
+          50: '#f0f7ff',  // Lighter blue background
+          100: '#e0eeff',  // Light blue background
+          200: '#c7ddff',  // Hover states
+          300: '#a4c4fc',  // Secondary elements
+          400: '#7ba7ff',  // Primary elements
+          500: '#5a84ff',  // Primary brand color
+          600: '#4361e6',  // Buttons and accents
+          700: '#3149c5',  // Hover states for buttons
+          800: '#2a389a',  // Dark accents
+          900: '#1c2562',  // Very dark accents
         },
+        // Deep teal as secondary color for accent elements
         secondary: {
-          // Accent colors
-          DEFAULT: '#4ca1af',
+          50: '#eefcf9',
+          100: '#d8f6f0',
+          200: '#b4ede2',
+          300: '#7edece',
+          400: '#44c7b6',
+          500: '#28a99a',
+          600: '#1f8a7f',
+          700: '#1d6f68',
+          800: '#1c5954',
+          900: '#1a4a46',
         },
-        dark: {
-          // Dark mode colors
-          100: '#d1d5db',
-          900: '#0a0a0a',
+        // Neutral grays for text and backgrounds
+        neutral: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
         },
       },
       animation: {
@@ -35,6 +52,8 @@ module.exports = {
         'fadeIn': 'fadeIn 1s forwards',
         'slideIn': 'slideIn 1s forwards',
         'float': 'float 6s infinite ease-in-out',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-slow': 'bounce 3s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -62,6 +81,36 @@ module.exports = {
           sm: '2rem',
           lg: '4rem',
           xl: '5rem',
+        },
+      },
+      boxShadow: {
+        'soft': '0 4px 20px rgba(0, 0, 0, 0.05)',
+        'card': '0 10px 30px rgba(0, 0, 0, 0.08)',
+        'highlight': '0 0 15px rgba(90, 132, 255, 0.3)',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'hero-pattern': 'url("/hero-pattern.svg")',
+        'dots-pattern': 'radial-gradient(circle, #5a84ff 1px, transparent 1px)',
+        'primary-gradient': 'linear-gradient(135deg, #5a84ff 0%, #3149c5 100%)',
+        'secondary-gradient': 'linear-gradient(135deg, #44c7b6 0%, #1d6f68 100%)',
+      },
+      backgroundSize: {
+        'dots-sm': '20px 20px',
+        'dots-lg': '30px 30px',
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '65ch',
+            color: 'inherit',
+            a: {
+              color: '#5a84ff',
+              '&:hover': {
+                color: '#3149c5',
+              },
+            },
+          },
         },
       },
     },

@@ -1,109 +1,174 @@
 "use client"
 
-import Image from 'next/image';
-import Badge from '@/components/ui/Badge';
+import { useRef, useEffect, useState } from 'react';
 import { Project } from '@/types';
+import ProjectCard from '@/components/ui/ProjectCard';
 
 export default function ProjectsSection() {
-  // Sample project data - replace with your actual projects
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // Sample project data - you would replace this with API calls to your backend
   const projects: Project[] = [
     {
       id: 1,
-      title: "Responsive Portfolio Website",
-      description: "Modern portfolio site built with Next.js and Tailwind CSS",
-      image: "/projects/portfolio.jpg", // Replace with actual image
-      technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+      title: "Moderne Portefølje Nettside",
+      description: "Moderne portefølje nettside bygget med Next.js, TypeScript og Tailwind CSS. Responsivt design for optimal visning på alle enheter.",
+      image: "/projects/portfolio.jpg",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
       githubUrl: "https://github.com/hassanyusuf1/portfolio",
       demoUrl: "https://hassanyusuf.com"
     },
     {
       id: 2,
-      title: "E-commerce Platform",
-      description: "Full stack e-commerce solution with payment processing",
-      image: "/projects/ecommerce.jpg", // Replace with actual image
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "E-handel Plattform",
+      description: "Fullstack e-handelsløsning med betalingsbehandling, produktstyring og brukeradministrasjon. Optimalisert for konvertering og brukervennlighet.",
+      image: "/projects/ecommerce.jpg",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe", "Redux"],
       githubUrl: "https://github.com/hassanyusuf1/ecommerce",
       demoUrl: "https://demo-shop.hassanyusuf.com"
     },
     {
       id: 3,
-      title: "Fitness Tracking App",
-      description: "Mobile app for tracking workouts and nutrition",
-      image: "/projects/fitness.jpg", // Replace with actual image
-      technologies: ["React Native", "Firebase", "Redux"],
+      title: "Trenings App",
+      description: "Mobil app for sporing av treningsøkter og ernæring. Inkluderer personlige mål, fremgangssporing og delingsalternativer.",
+      image: "/projects/fitness.jpg",
+      technologies: ["React Native", "Firebase", "Redux", "Expo"],
       githubUrl: "https://github.com/hassanyusuf1/fitness-app",
       demoUrl: "https://fitness.hassanyusuf.com"
+    },
+    {
+      id: 4,
+      title: "Smart Hjem Kontrollpanel",
+      description: "IoT-kontrollpanel for smarthjem-enheter med visualisering av energiforbruk og automatiseringsfunksjoner.",
+      image: "/projects/smarthome.jpg",
+      technologies: ["Vue.js", "D3.js", "Node.js", "MQTT", "WebSockets"],
+      githubUrl: "https://github.com/hassanyusuf1/smart-home",
+      demoUrl: "https://smarthome.hassanyusuf.com"
+    },
+    {
+      id: 5,
+      title: "AI Bildebehandling",
+      description: "Nettapplikasjon som bruker maskinlæring til å forbedre og manipulere bilder i sanntid. Implementerer flere AI-modeller.",
+      image: "/projects/ai-image.jpg",
+      technologies: ["TensorFlow.js", "React", "WebGL", "Python", "FastAPI"],
+      githubUrl: "https://github.com/hassanyusuf1/ai-image",
+      demoUrl: "https://ai-image.hassanyusuf.com"
+    },
+    {
+      id: 6,
+      title: "Sosial Medie Dashboard",
+      description: "Analyseverktøy for sosiale medier som samler data fra flere plattformer og gir innsiktsfulle visualiseringer og rapporter.",
+      image: "/projects/social-dashboard.jpg",
+      technologies: ["Angular", "Chart.js", "Node.js", "PostgreSQL", "Redis"],
+      githubUrl: "https://github.com/hassanyusuf1/social-dashboard",
+      demoUrl: "https://social-metrics.hassanyusuf.com"
     }
   ];
+  
+  // Intersection Observer to trigger animations when section is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      }
+    );
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
-    <section id="projects" className="section bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-slideIn">
-          <h2 className="section-title">Mine Prosjekter</h2>
-          <div className="section-divider"></div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Her er noen av mine nyeste prosjekter. Kombinerer kreativitet og teknisk kompetanse
-            for å skape løsninger som utmerker seg.
+    <section 
+      id="projects" 
+      ref={sectionRef}
+      className="section bg-neutral-50 dark:bg-neutral-900 relative overflow-hidden"
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-dots-pattern bg-dots-lg opacity-[0.03] dark:opacity-[0.05]"></div>
+      
+      {/* Optional floating elements for visual interest */}
+      <div className="absolute top-20 right-10 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-10 w-80 h-80 bg-secondary-500/5 rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className={`text-center mb-16 transform transition duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-neutral-800 dark:text-white mb-4">
+            Mine Prosjekter
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto mb-6"></div>
+          <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+            Her er noen av mine nyeste prosjekter. Jeg kombinerer kreativitet og teknisk kompetanse
+            for å skape løsninger som utmerker seg i både funksjonalitet og design.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        {/* Filter buttons - optional enhancement */}
+        <div className={`flex flex-wrap justify-center gap-2 mb-10 transform transition duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+          style={{ transitionDelay: '200ms' }}
+        >
+          {['Alle', 'Web', 'Mobil', 'UI/UX', 'Backend'].map((filter, index) => (
+            <button
+              key={index}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 
+                ${index === 0 
+                  ? 'bg-primary-500 text-white shadow-md' 
+                  : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-primary-50 dark:hover:bg-neutral-700'}
+              `}
+            >
+              {filter}
+            </button>
           ))}
+        </div>
+        
+        {/* Projects grid with staggered animation */}
+        <div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {projects.map((project, index) => (
+            <div 
+              key={project.id}
+              className={`transform transition duration-700 ${
+                isVisible 
+                  ? 'translate-y-0 opacity-100' 
+                  : 'translate-y-20 opacity-0'
+              }`}
+              style={{ transitionDelay: `${300 + index * 100}ms` }}
+            >
+              <ProjectCard project={project} index={index} />
+            </div>
+          ))}
+        </div>
+        
+        {/* Show more button - optional enhancement */}
+        <div className="text-center mt-12">
+          <button className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-neutral-800 text-primary-600 dark:text-primary-400 rounded-full shadow-soft hover:shadow-md transition-all duration-300 group">
+            <span>Se flere prosjekter</span>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>
-  );
-}
-
-function ProjectCard({ project }: { project: Project }) {
-  return (
-    <div className="project-card animate-fadeIn" style={{ animationDelay: '200ms' }}>
-      <div className="relative h-48 overflow-hidden">
-        {/* Use placeholder if no image is available */}
-        <div className="absolute inset-0 bg-primary-100 flex items-center justify-center">
-          <span className="text-primary-500 font-bold">{project.title}</span>
-        </div>
-      </div>
-      
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-        
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.technologies.map((tech, index) => (
-            <Badge key={index} text={tech} />
-          ))}
-        </div>
-        
-        <div className="flex justify-between">
-          <a 
-            href={project.githubUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary-500 hover:text-primary-700 font-medium inline-flex items-center"
-          >
-            <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
-            </svg>
-            GitHub
-          </a>
-          
-          <a 
-            href={project.demoUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary-500 hover:text-primary-700 font-medium inline-flex items-center"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-            Live Demo
-          </a>
-        </div>
-      </div>
-    </div>
   );
 }
