@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { FooterSection } from '@/types';
 
 export default function Footer() {
-  // Flytt Date-operasjonen til en useEffect for å unngå hydration-feil
-  const [currentYear, setCurrentYear] = useState("2025"); // Bruk en trygg default
+  // Move the Date operation to a useEffect to avoid hydration errors
+  const [currentYear, setCurrentYear] = useState("2025"); // Use a safe default
   const [email, setEmail] = useState('');
 
   const quickLinks: FooterSection = {
@@ -19,27 +19,27 @@ export default function Footer() {
     ]
   };
   
-  // Kjør dette KUN på klientsiden
+  // Run this ONLY on the client side
   useEffect(() => {
     setCurrentYear(new Date().getFullYear().toString());
   }, []);
   
   const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Implementer nyhetsbrev-påmelding her
+    // Implement newsletter signup here
     alert(`Takk for påmeldingen! Du vil motta oppdateringer på: ${email}`);
     setEmail('');
   };
   
   return (
     <footer className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
-      {/* Dekorative elementer */}
+      {/* Decorative elements */}
       <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600"></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-12 gap-8 mb-8 footer-grid">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8">
           {/* Logo & Info */}
-          <div className="md-col-span-5">
+          <div className="md:col-span-5">
             <div className="flex items-center mb-6">
               <div className="bg-primary-500 text-white p-2 rounded">
                 <span className="font-bold">HY</span>
@@ -70,7 +70,7 @@ export default function Footer() {
           </div>
           
           {/* Quick Links */}
-          <div className="md-col-span-2">
+          <div className="md:col-span-2">
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">{quickLinks.title}</h3>
             <ul className="space-y-2">
               {quickLinks.links.map((link, index) => (
@@ -84,7 +84,7 @@ export default function Footer() {
           </div>
           
           {/* Contact */}
-          <div className="md-col-span-2">
+          <div className="md:col-span-2">
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Kontakt</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
@@ -103,7 +103,7 @@ export default function Footer() {
           </div>
           
           {/* Newsletter */}
-          <div className="md-col-span-3">
+          <div className="md:col-span-3">
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Nyhetsbrev</h3>
             <p className="text-gray-300 mb-4">Abonner for å få oppdateringer om mine nyeste prosjekter.</p>
             <form onSubmit={handleSubscribe} className="space-y-2">

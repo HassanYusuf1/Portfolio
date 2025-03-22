@@ -4,15 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { NavLink } from '@/types';
 
-// NavLink component
-function NavLinkComponent({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link href={href} className="navbar-link">
-      {children}
-    </Link>
-  );
-}
-
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,17 +39,17 @@ export default function Navbar() {
         </Link>
         
         {/* Desktop Nav */}
-        <div className="hidden md-flex navbar-links">
+        <div className="navbar-links">
           {navLinks.map((link, index) => (
-            <NavLinkComponent key={index} href={link.href}>
+            <Link key={index} href={link.href} className="navbar-link">
               {link.title}
-            </NavLinkComponent>
+            </Link>
           ))}
         </div>
         
         {/* Mobile Menu Button */}
         <button 
-          className="md-hidden"
+          className="block md:hidden"
           onClick={toggleMobileMenu}
           aria-label={isMobileMenuOpen ? "Lukk meny" : "Åpne meny"}
         >
@@ -76,12 +67,12 @@ export default function Navbar() {
       
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md-hidden bg-white/95 dark:bg-gray-900/95 px-6 py-4 shadow-lg">
+        <div className="block md:hidden bg-white/95 dark:bg-gray-900/95 px-6 py-4 shadow-lg">
           <div className="flex flex-col space-y-4">
             {navLinks.map((link, index) => (
-              <NavLinkComponent key={index} href={link.href}>
+              <Link key={index} href={link.href} className="navbar-link">
                 {link.title}
-              </NavLinkComponent>
+              </Link>
             ))}
           </div>
         </div>

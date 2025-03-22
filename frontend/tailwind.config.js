@@ -32,6 +32,24 @@ module.exports = {
       },
       animation: {
         'spin-slow': 'spin 20s linear infinite',
+        'fadeIn': 'fadeIn 1s forwards',
+        'slideIn': 'slideIn 1s forwards',
+        'float': 'float 6s infinite ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          'from': { opacity: '0', transform: 'translateY(20px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideIn: {
+          'from': { transform: 'translateX(-50px)', opacity: '0' },
+          'to': { transform: 'translateX(0)', opacity: '1' },
+        },
+        float: {
+          '0%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0px)' },
+        },
       },
       fontFamily: {
         sans: ['var(--font-montserrat)', 'Arial', 'sans-serif'],

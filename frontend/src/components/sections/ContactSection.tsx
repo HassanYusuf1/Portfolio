@@ -21,11 +21,11 @@ export default function ContactSection() {
     e.preventDefault();
     console.log(formData);
     
-    // Her kan du implementere kode for å sende data til API-et
-    // Eksempel på hvordan du kan vise en bekreftelse til brukeren:
+    // Here you would implement code to send data to your API
+    // Example of showing a confirmation to the user:
     alert('Takk for din melding! Vi kontakter deg snart.');
     
-    // Nullstill skjemaet
+    // Reset the form
     setFormData({
       name: '',
       email: '',
@@ -36,7 +36,7 @@ export default function ContactSection() {
   return (
     <section id="contact" className="section bg-white dark:bg-gray-900">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 slide-in">
+        <div className="text-center mb-16 animate-slideIn">
           <h2 className="section-title">Ta Kontakt</h2>
           <div className="section-divider"></div>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -44,9 +44,9 @@ export default function ContactSection() {
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto grid md-grid-cols-2 gap-10 contact-grid">
-          {/* Kontaktinformasjon */}
-          <div className="slide-in">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Contact information */}
+          <div className="animate-slideIn">
             <h3 className="text-xl font-bold mb-4">Kontaktinformasjon</h3>
             <div className="space-y-4">
               <div className="flex items-center">
@@ -74,7 +74,7 @@ export default function ContactSection() {
                 </div>
               </div>
               
-              {/* Sosiale Medier */}
+              {/* Social Media */}
               <div className="mt-8">
                 <h4 className="font-medium mb-3">Følg meg</h4>
                 <div className="flex space-x-4">
@@ -98,8 +98,8 @@ export default function ContactSection() {
             </div>
           </div>
           
-          {/* Kontaktskjema */}
-          <div className="slide-in delay-200">
+          {/* Contact form */}
+          <div className="animate-slideIn [animation-delay:200ms]">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Navn</label>
