@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Data;
 using Portfolio.API.Data.Repositories;
 using Portfolio.API.Interfaces;
+using Microsoft.Extensions.Logging;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,5 +53,29 @@ app.UseCors("AllowReactApp");
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Database initialization
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<PortfolioDbContext>();
+        
+        // Apply any pending migrations
+        context.Database.Migrate();
+        
+        // Seed the database with initial data
+        DbInitializer.Initialize(context);
+        
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogInformation("Database initialized successfully.");
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while initializing the database.");
+    }
+}
 
 app.Run();

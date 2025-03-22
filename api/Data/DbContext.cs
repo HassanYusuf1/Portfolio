@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Models;
+using System.Collections.Generic;
 
 namespace Portfolio.API.Data
 {
@@ -10,14 +11,13 @@ namespace Portfolio.API.Data
         }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Skill> Skills { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             
-            // Konfigurasjon for Project
+            // Configuration for Project entity
             modelBuilder.Entity<Project>()
                 .Property(p => p.Title)
                 .IsRequired()
@@ -26,18 +26,16 @@ namespace Portfolio.API.Data
             modelBuilder.Entity<Project>()
                 .Property(p => p.Description)
                 .HasMaxLength(500);
+                
+            // Important: Configure Technologies list conversion for database storage
+            modelBuilder.Entity<Project>()
+                .Property(p => p.Technologies)
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList()
+                );
 
-            // Konfigurasjon for Skill
-            modelBuilder.Entity<Skill>()
-                .Property(s => s.Name)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            modelBuilder.Entity<Skill>()
-                .Property(s => s.Category)
-                .HasMaxLength(50);
-
-            // Konfigurasjon for ContactMessage
+            // Configuration for ContactMessage entity
             modelBuilder.Entity<ContactMessage>()
                 .Property(c => c.Name)
                 .IsRequired()
