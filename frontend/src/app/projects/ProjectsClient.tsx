@@ -179,7 +179,7 @@ export default function ProjectsClient() {
                     
                     <div className="flex space-x-2">
                       {project.gitHubUrl && (
-                        
+                        <a
                           href={project.gitHubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -190,7 +190,7 @@ export default function ProjectsClient() {
                         </a>
                       )}
                       {project.liveDemoUrl && (
-                        
+                        <a
                           href={project.liveDemoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
