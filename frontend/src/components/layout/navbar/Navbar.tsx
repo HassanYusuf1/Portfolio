@@ -272,7 +272,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.3 }}
             >
-              &copy; 2024 Hassan Yusuf
+              &copy; {new Date().getFullYear()} Hassan Yusuf
             </motion.div>
           </motion.div>
         )}
