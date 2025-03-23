@@ -1,58 +1,66 @@
-import apiClient from './apiClient';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-// Define TypeScript interfaces for your API responses
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-  gitHubUrl: string;
-  liveDemoUrl: string;
-  createdDate: string;
-  technologies: string[];
-}
+// Define the base API URL
+const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5147/api';
 
-export interface ContactMessage {
-  name: string;
-  email: string;
-  message: string;
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data?: T;
-}
-
-// Portfolio service methods
-const portfolioService = {
-  // Get all projects
-  async getProjects(): Promise<Project[]> {
-    const response = await apiClient.get<Project[]>('/projects');
-    return response.data;
+// Create an Axios instance with default configuration
+const apiClient: AxiosInstance = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
   },
-  
-  // Get a single project by ID
-  async getProject(id: number): Promise<Project> {
-    const response = await apiClient.get<Project>(`/projects/${id}`);
-    return response.data;
-  },
-  
-  // Send a contact message
-  async sendContactMessage(contactData: ContactMessage): Promise<ApiResponse<void>> {
-    const response = await apiClient.post<ApiResponse<void>>('/contact', contactData);
-    return response.data;
-  },
-  
-  // Search projects by technology (example of extending the API)
-  async searchProjectsByTechnology(technology: string): Promise<Project[]> {
-    const allProjects = await this.getProjects();
-    return allProjects.filter(project => 
-      project.technologies.some(tech => 
-        tech.toLowerCase().includes(technology.toLowerCase())
-      )
-    );
-  },
-};
+  timeout: 10000, // 10 seconds timeout
+});
 
-export default portfolioService;
+// Request interceptor for API calls
+apiClient.interceptors.request.use(
+  (config) => {
+    // You can add authentication tokens here if needed
+    // const token = localStorage.getItem('authToken');
+    // if (token) {
+    //   config.headers = {
+    //     ...config.headers,
+    //     Authorization: `Bearer ${token}`,
+    //   };
+    // }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor for API calls
+apiClient.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    
+    // Handle specific error codes
+    if (error.response) {
+      // Handle 401 Unauthorized
+      if (error.response.status === 401 && !originalRequest._retry) {
+        // Handle token refresh or redirect to login if needed
+      }
+      
+      // Handle 404 Not Found
+      if (error.response.status === 404) {
+        console.error('Resource not found:', originalRequest.url);
+      }
+      
+      // Handle 500 Internal Server Error
+      if (error.response.status >= 500) {
+        console.error('Server error:', error.response.data);
+      }
+    } else if (error.request) {
+      // Handle network errors
+      console.error('Network error:', error.message);
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
+export default apiClient;
