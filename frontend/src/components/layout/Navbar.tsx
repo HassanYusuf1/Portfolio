@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { NavLink } from '@/types';
+import DarkModeToggle from '@/components/ui/DarkModeToggle';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -54,30 +55,36 @@ export default function Navbar() {
               {link.title}
             </Link>
           ))}
+          
+          {/* Dark Mode Toggle */}
+          <DarkModeToggle />
         </div>
         
         {/* Mobile Menu Toggle */}
-        <button 
-          className="block md:hidden text-neutral-800 dark:text-white"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? "Lukk meny" : "Åpne meny"}
-        >
-          {isMobileMenuOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
+        <div className="flex md:hidden items-center space-x-4">
+          <DarkModeToggle />
+          <button 
+            className="text-neutral-800 dark:text-white"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Lukk meny" : "Åpne meny"}
+          >
+            {isMobileMenuOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
       
       {/* Mobile Menu */}
       <div 
         className={`md:hidden absolute w-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-60 py-4' : 'max-h-0 py-0'
+          isMobileMenuOpen ? 'max-h-96 py-4' : 'max-h-0 py-0'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 flex flex-col space-y-4">

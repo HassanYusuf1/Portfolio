@@ -1,4 +1,3 @@
-// src/components/ui/DarkModeToggle.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -7,28 +6,53 @@ export default function DarkModeToggle() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // Check user's preference
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setIsDarkMode(darkModeMediaQuery.matches);
+    // Check if user has dark mode preference or previously set dark mode
+    const darkModeSetting = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Set initial dark mode state
+    if (darkModeSetting === 'true' || (darkModeSetting === null && prefersDark)) {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    }
 
     // Listen for changes in prefers-color-scheme
     const handleChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
+      if (localStorage.getItem('darkMode') === null) {
+        setIsDarkMode(e.matches);
+        if (e.matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
     };
     
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     darkModeMediaQuery.addEventListener('change', handleChange);
     return () => darkModeMediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
+    const newDarkModeState = !isDarkMode;
+    setIsDarkMode(newDarkModeState);
+    
+    // Save to localStorage and update classes
+    localStorage.setItem('darkMode', newDarkModeState.toString());
+    if (newDarkModeState) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   };
 
   return (
     <button
       onClick={toggleDarkMode}
-      className="p-2 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-300"
+      className="p-2 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-300 border border-neutral-200 dark:border-neutral-700"
       aria-label={isDarkMode ? 'Bytt til lys modus' : 'Bytt til mørk modus'}
     >
       {isDarkMode ? (
