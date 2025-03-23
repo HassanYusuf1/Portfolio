@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -36,7 +37,7 @@ export default function AboutSection() {
     <section 
       id="about" 
       ref={sectionRef}
-      className="py-20 bg-white dark:bg-neutral-800 relative overflow-hidden"
+      className="py-20 bg-neutral-50 dark:bg-neutral-900 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-5">
@@ -51,6 +52,9 @@ export default function AboutSection() {
             Om Meg
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto mb-6"></div>
+          <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+            Bak hver kode er en lidenskapelig utvikler med en unik bakgrunn og et drivende engasjement.
+          </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -58,6 +62,16 @@ export default function AboutSection() {
           <div className={`transform transition duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
             <div className="relative">
               <div className="w-64 h-64 mx-auto rounded-full overflow-hidden relative bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center border-4 border-white dark:border-neutral-700 shadow-xl">
+                {/* If you have a profile image, uncomment this: */}
+                {/* <Image 
+                  src="/images/profile.jpg" 
+                  alt="Hassan Yusuf" 
+                  fill 
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 256px"
+                /> */}
+                
+                {/* Fallback if no image is available */}
                 <div className="font-bold text-primary-600 dark:text-primary-400 text-4xl">HY</div>
               </div>
               <div className="absolute inset-0 border-4 border-primary-500 dark:border-primary-400 rounded-full border-dashed animate-spin-slow opacity-30"></div>
@@ -121,7 +135,50 @@ export default function AboutSection() {
               </p>
             </div>
             
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            {/* Skills */}
+            <div className="mt-8 mb-8">
+              <h5 className="font-medium text-neutral-800 dark:text-white mb-4">Mine Ferdigheter</h5>
+              <div className="space-y-3">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">React / Next.js</span>
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">95%</span>
+                  </div>
+                  <div className="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
+                    <div className="bg-primary-500 h-2 rounded-full" style={{ width: '95%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">TypeScript</span>
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">90%</span>
+                  </div>
+                  <div className="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
+                    <div className="bg-primary-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">ASP.NET Core</span>
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">85%</span>
+                  </div>
+                  <div className="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
+                    <div className="bg-primary-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Tailwind CSS</span>
+                    <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">92%</span>
+                  </div>
+                  <div className="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-2">
+                    <div className="bg-primary-500 h-2 rounded-full" style={{ width: '92%' }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link href="#projects" className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-center">
                 Se Mine Prosjekter
               </Link>

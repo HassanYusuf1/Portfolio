@@ -2,6 +2,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Montserrat, Roboto_Mono } from 'next/font/google';
+import CustomCursor from '@/components/ui/CustomCursor';
 
 // Font declarations
 const montserrat = Montserrat({
@@ -34,6 +35,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
+        <CustomCursor />
         {children}
       </body>
     </html>
