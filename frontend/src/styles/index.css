@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Import all component styles */
+@import './navbar/navbar.css';
+@import './footer/footer.css';
 
 :root {
   --foreground-rgb: 23, 23, 23;
