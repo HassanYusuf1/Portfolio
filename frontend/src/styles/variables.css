@@ -1,0 +1,14 @@
+:root {
+    /* Custom properties that can be used in both CSS and JavaScript */
+    --header-height: 80px;
+    --footer-height: 300px;
+    
+    --animation-duration: 300ms;
+    --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Dark mode overrides */
+  .dark {
+    --header-height: 80px;
+    --footer-height: 300px;
+  }

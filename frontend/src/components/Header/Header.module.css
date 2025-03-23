@@ -1,0 +1,19 @@
+.logoLink {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logoLink::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: theme('colors.primary.500');
+    transition: width 0.3s ease;
+  }
+  
+  .logoLink:hover::after {
+    width: 100%;
+  }
