@@ -1,4 +1,5 @@
 /* Add to your frontend/src/app/globals.css */
+@import 'src/styles/layout-components.css';
 
 @keyframes floatAnimation {
   0%, 100% { transform: translateY(0); }
