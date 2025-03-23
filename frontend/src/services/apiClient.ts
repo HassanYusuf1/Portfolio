@@ -1,3 +1,4 @@
+// src/services/apiClient.ts
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // Define the base API URL
@@ -16,13 +17,6 @@ const apiClient: AxiosInstance = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // You can add authentication tokens here if needed
-    // const token = localStorage.getItem('authToken');
-    // if (token) {
-    //   config.headers = {
-    //     ...config.headers,
-    //     Authorization: `Bearer ${token}`,
-    //   };
-    // }
     return config;
   },
   (error) => {
@@ -55,7 +49,7 @@ apiClient.interceptors.response.use(
         console.error('Server error:', error.response.data);
       }
     } else if (error.request) {
-      // Handle network errors
+      // Network errors
       console.error('Network error:', error.message);
     }
     

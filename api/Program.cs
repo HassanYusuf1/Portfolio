@@ -2,43 +2,45 @@ using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Data;
 using Portfolio.API.Data.Repositories;
 using Portfolio.API.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// --- Registrer tjenester før "builder.Build()" ---
+
+// Controllers
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger (API-dokumentasjon)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext with SQLite instead of SQL Server
+// SQLite DbContext
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register repositories
+// Repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
-// Add CORS
+// CORS (kun én gang!)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
         policy.WithOrigins(
-                "http://localhost:3000",
-                "https://your-production-domain.com" // Add your production URL here
+                "http://localhost:3000",              // Development frontend URL
+                "https://your-production-domain.com"  // Production frontend URL
             )
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
 });
 
+// --- Bygg appen (ingen tjenester kan legges til etter dette punktet!) ---
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// --- Konfigurer HTTP-request pipeline ---
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,27 +49,27 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Use CORS before Authorization
+// Aktiver CORS (bruk policy definert ovenfor)
 app.UseCors("AllowReactApp");
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-// Database initialization
+// --- Database-initialisering ---
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<PortfolioDbContext>();
-        
-        // Apply any pending migrations and create the database if it doesn't exist
+
+        // Oppretter databasen og kjører eventuelle migrasjoner automatisk
         context.Database.EnsureCreated();
-        
-        // Seed the database with initial data
-        DbInitializer.Initialize(context);
-        
+
+        // Seed database (fjern kommentar for å aktivere)
+        // DbInitializer.Initialize(context);
+
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogInformation("Database initialized successfully.");
     }

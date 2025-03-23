@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Github, Globe } from 'lucide-react';
 import portfolioService, { Project } from '@/services/portfolioService';
-import { sortProjectsByDate, filterProjectsByTechnology } from '@/utils/helpers';
+import { isValidEmail } from '@/utils/helpers';
 
 export default function ProjectsClient() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -20,7 +20,10 @@ export default function ProjectsClient() {
       try {
         setLoading(true);
         const data = await portfolioService.getProjects();
-        const sortedProjects = sortProjectsByDate(data);
+        // Sort projects by created date (newest first)
+        const sortedProjects = data.sort((a, b) => {
+          return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime();
+        });
         setProjects(sortedProjects);
         setFilteredProjects(sortedProjects);
       } catch (err) {
@@ -37,7 +40,11 @@ export default function ProjectsClient() {
   // Filter projects when filter changes
   useEffect(() => {
     if (filter) {
-      const filtered = filterProjectsByTechnology(projects, filter);
+      const filtered = projects.filter(project => 
+        project.technologies.some(tech => 
+          tech.toLowerCase().includes(filter.toLowerCase())
+        )
+      );
       setFilteredProjects(filtered);
     } else {
       setFilteredProjects(projects);
@@ -48,7 +55,7 @@ export default function ProjectsClient() {
     setFilter(e.target.value);
   };
 
-  // All unique technologies across projects
+  // Get all unique technologies across projects
   const allTechnologies = [...new Set(
     projects.flatMap(project => project.technologies)
   )].sort();
@@ -179,7 +186,7 @@ export default function ProjectsClient() {
                     
                     <div className="flex space-x-2">
                       {project.gitHubUrl && (
-                        <a
+                        
                           href={project.gitHubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -190,7 +197,7 @@ export default function ProjectsClient() {
                         </a>
                       )}
                       {project.liveDemoUrl && (
-                        <a
+                        
                           href={project.liveDemoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
