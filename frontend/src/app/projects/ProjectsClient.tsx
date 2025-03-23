@@ -1,4 +1,3 @@
-// src/app/projects/ProjectsClient.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,7 +5,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Github, Globe } from 'lucide-react';
 import portfolioService, { Project } from '@/services/portfolioService';
-import { isValidEmail } from '@/utils/helpers';
 
 export default function ProjectsClient() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -62,7 +60,7 @@ export default function ProjectsClient() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,7 +132,7 @@ export default function ProjectsClient() {
 
         {/* Projects grid */}
         {!loading && !error && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
@@ -160,7 +158,7 @@ export default function ProjectsClient() {
                 
                 <div className="p-6">
                   <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-                  <p className="text-neutral-600 dark:text-neutral-400 mb-4">
+                  <p className="text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
                     {project.description}
                   </p>
                   
@@ -186,7 +184,7 @@ export default function ProjectsClient() {
                     
                     <div className="flex space-x-2">
                       {project.gitHubUrl && (
-                        
+                        <a
                           href={project.gitHubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -197,7 +195,7 @@ export default function ProjectsClient() {
                         </a>
                       )}
                       {project.liveDemoUrl && (
-                        
+                        <a
                           href={project.liveDemoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
