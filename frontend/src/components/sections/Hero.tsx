@@ -1,3 +1,4 @@
+// src/components/sections/Hero.tsx
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
@@ -289,4 +290,21 @@ export default function Hero() {
                   className="tech-icon-container"
                 >
                   <div className="w-14 h-14 rounded-md bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center group relative overflow-hidden">
-                    <span className="font-mono font-bold text-sm group-hover:scale-110 transition-
+                    <span className="font-mono font-bold text-sm group-hover:scale-110 transition-transform duration-300" style={{ color: tech.color }}>
+                      {tech.letter}
+                    </span>
+                    
+                    {/* Tooltip */}
+                    <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 group-hover:-bottom-8 transition-all duration-300 whitespace-nowrap pointer-events-none">
+                      {tech.name}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
