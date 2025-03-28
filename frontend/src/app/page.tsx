@@ -1,9 +1,8 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Code, Database, Server } from 'lucide-react';
+import { ArrowRight, Code, Database, Server, Github, Globe } from 'lucide-react';
 import Button from '@/components/Shared/Button';
 import portfolioService, { Project } from '@/services/portfolioService';
 

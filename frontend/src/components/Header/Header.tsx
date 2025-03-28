@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import styles from './Header.module.css';
 import Navbar from './components/Navbar';
+import Logo from './components/Logo';
 import { Menu, X } from 'lucide-react';
 
 const Header = () => {
@@ -15,19 +16,13 @@ const Header = () => {
   const headerOpacity = useTransform(
     scrollY, 
     [0, 50], 
-    [1, scrolled ? 0.9 : 1]
+    [1, scrolled ? 0.95 : 1]
   );
   
   const headerBackground = useTransform(
     scrollY,
     [0, 50],
-    ['rgba(255, 255, 255, 0)', scrolled ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0)']
-  );
-
-  const headerShadow = useTransform(
-    scrollY,
-    [0, 50],
-    ['none', scrolled ? '0 4px 20px rgba(0, 0, 0, 0.05)' : 'none']
+    ['rgba(255, 255, 255, 0)', scrolled ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0)']
   );
 
   useEffect(() => {
@@ -43,23 +38,17 @@ const Header = () => {
 
   return (
     <motion.header 
-      className={`fixed top-0 w-full z-50 backdrop-blur-sm ${scrolled ? 'py-3' : 'py-5'} transition-all duration-300`}
+      className={`fixed top-0 w-full z-50 backdrop-blur-sm transition-all duration-300 ${
+        scrolled ? 'py-2' : 'py-4'
+      }`}
       style={{ 
         opacity: headerOpacity,
         backgroundColor: headerBackground,
-        boxShadow: headerShadow
+        boxShadow: scrolled ? '0 2px 10px rgba(0, 0, 0, 0.05)' : 'none'
       }}
     >
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
-        <Link href="/" className={styles.logoLink}>
-          <motion.div 
-            className="text-xl md:text-2xl font-bold text-neutral-800 dark:text-white"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <span className="text-primary-600">Hassan</span>Yusuf
-          </motion.div>
-        </Link>
+        <Logo />
 
         {/* Desktop Navigation */}
         <div className="hidden md:block">
